@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Repository</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* General Styles */
+        body {
+            background-color: black;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .main {
+            background-color: rgb(20, 17, 17);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        button {
+            background-color: rgb(44, 153, 172);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: rgb(33, 119, 135);
+        }
+
+        /* Full-Screen Video Modal Styling */
+        .video-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Dark overlay */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .video-container video {
+            width: 90%;
+            height: 90%;
+            object-fit: contain; /* Keeps the aspect ratio while resizing */
+            margin: 0 auto;
+            border-radius: 10px;
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(255, 0, 0, 0.7);
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 768px) {
+            button {
+                width: 90%;
+                font-size: 0.9rem;
+            }
+
+            .video-container video {
+                width: 80%; /* Adjust video size for smaller screens */
+                height: 80%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            button {
+                font-size: 0.8rem;
+                padding: 8px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main">
+        <h1>Repository</h1>
+    </div>
+
+    <div class="container">
+        <div class="ayeng">
+            <button onclick="showVideo('video1')">Video 1</button>
+        </div>
+        
+        <div class="pahak">
+            <button onclick="showVideo('video2')">Video 2</button>
+        </div>
+        
+        <div class="taba">
+            <button onclick="showVideo('video3')">Video 3</button>
+        </div>
+
+        <div class="sir-o">
+            <button onclick="showVideo('video4')">Video 4</button>
+        </div>
+    </div>
+
+    <!-- Modal for video -->
+    <div id="videoModal" class="video-container">
+        <button class="close-btn" onclick="closeVideo()">X</button>
+        <video id="video1" src="ayeng.mp4" controls></video>
+        <video id="video2" src="pahak.mp4" controls></video>
+        <video id="video3" src="taba.mp4" controls></video>
+        <video id="video4" src="sir%20o.mp4" controls></video>
+    </div>
+
+    <script>
+        function showVideo(videoId) {
+            const videos = document.querySelectorAll('.video-container video');
+            const selectedVideo = document.getElementById(videoId);
+
+            // Hide all videos in the modal
+            videos.forEach(video => {
+                video.style.display = 'none';
+            });
+
+            // Show the selected video
+            selectedVideo.style.display = 'block';
+
+            // Show the modal
+            document.getElementById('videoModal').style.display = 'flex';
+
+            // Play the video
+            selectedVideo.play();
+        }
+
+        function closeVideo() {
+            const modal = document.getElementById('videoModal');
+            const videos = modal.querySelectorAll('video');
+
+            // Stop and hide all videos
+            videos.forEach(video => {
+                video.pause();
+                video.currentTime = 0;
+                video.style.display = 'none';
+            });
+
+            // Hide the modal
+            modal.style.display = 'none';
+        }
+
+        // Close video when clicking outside of the modal
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeVideo();
+            }
+        });
+    </script>
+
+</body>
+</html>
